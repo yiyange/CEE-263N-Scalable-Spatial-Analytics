@@ -16,7 +16,7 @@ total = len(X)
 X = X[0::int(total/sample)]
 ```
 
-#### Reference time of clustering of 100K samples into k=100 clusters with k-means 
+#### Reference time of clustering of 100K samples into k=100 clusters using k-means 
 
 ```python
 n = 100
@@ -27,7 +27,7 @@ t_fin_km = time.time() - t_km
 print (t_fin_km)
 ```
 
-Reference time is 141 seconds
+Reference time is 141 seconds.
 
 #### Reference time of clustering of 100K samples into k=100 clusters with mini-batch k-means.
 To select a propropriate batch_size, the following code is used to roughly look at the relationship between `batch size` 
@@ -62,7 +62,7 @@ Via some tests, n = 370 seems to be a reasonable starting number. The following 
 Processing time threshold is set to approximately 60 seconds.
 
 ```python
-n = 370
+n = 35
 t_fin_km = 0
 while t_fin_km <= 60:
     print ('testing n equal to ' + str(n))
@@ -75,9 +75,9 @@ while t_fin_km <= 60:
     ## get the time to finish clustering
     t_fin_km = time.time() - t_km
     print (t_fin_km)
-    n += 5
+    n += 1
 ```
-`k_max` = 380 
+`k_max` = 36 
 
 #### Maximum number of clusters k_max that the implementation of minibatch k-means can handle
 Three `batch_size` (1000, 5000, 10000) were run to see how `k_max` changes. `perc` and `n` in the following code can vary as needed.
@@ -131,19 +131,71 @@ eps_100 = 0.001 (0.002 and 0.003 also produces 100 clusters)
 
 
 ### Part 2. Clustering: scalability
-#### 2.1.a
-##### Computational time as a function of sample size for a fixed k=100 with k_means
+#### KMeans Scalability and Estimation
 
-![Computational time as a function of sample size for a fixed k=100 with k_means](https://raw.githubusercontent.com/YiyanGe/CEE-263N-Scalable-Spatial-Analytics/master/images/Assignment%201/part21akmeans.png)
+Essentially we are looking at how processing time increases as 1) sample size increases and 2) number of clusters increases.
+
+##### Computational time as a function of `n_clusters` (consider the range of 2 to the `k_max`) with k_means
+The figure below shows the relationship between processing time and sample size using k_means. Though a linear regression line is fitted, it is
+very likely that there is an exponential relationship as sample size goes even higher. 
+
+![Computational time as a function of sample size for a fixed k=100 with k_means][Figure1]
+
+[Figure1]:https://raw.githubusercontent.com/YiyanGe/CEE-263N-Scalable-Spatial-Analytics/master/images/Assignment%201/part21akmeans.png
+
+If assuming linear realtionship, we see that the computational time is estimated to be 143 seconds as sample size approaches 100 million. It is underestimated
+because, as shown in previously, 100K samples with 100 clusters require 141 seconds processing time already.
+
+fitting exponential?
+
+
+
+##### Computational time as a function of `n_clusters` (consider the range of 2 to the `k_max`) with k_means
+
+Given the 100K sample, computational time is estimated to be 160 seconds when number of clusters is 100, which is proved to be relatively accruate
+given the previous test (reference time around 141 seconds when number of clusters is 100).
+
+![Computational time as a function of `n_clusters` (consider the range of 2 to the `k_max`) with k_means][Figure3]
+
+[Figure3]:https://raw.githubusercontent.com/YiyanGe/CEE-263N-Scalable-Spatial-Analytics/master/images/Assignment%201/part21bkmeans.png
+
+A table is built to summarize the information:
+
+| Sample Size | `n_clusters` | Computational Time (seconds)|
+|:----------- |:------------ | ---------------------------:|
+|100          |2             |3950                         |
+|             |36 (`k_max`)  |
+|             |100           |
+|100000       |2             |365                          |
+|             |36 (`k_max`)  |
+|             |100           |
+|1000000      |2             |175                          |
+|             |36 (`k_max`)  |175                          |
+|             |100           |                          |
+
+
 
 
 ##### Computational time as a function of sample size for a fixed k=100 with MiniBatchKMeans
 
-#### 2.1.
-##### Computational time as a function of `n_clusters` (consider the range of 2 to the `k_max`) with k_means
+![Computational time as a function of sample size for a fixed k=100 with MiniBatchKMeans][Figure2]
+
+[Figure2]:https://raw.githubusercontent.com/YiyanGe/CEE-263N-Scalable-Spatial-Analytics/master/images/Assignment%201/part21aminibatchkmeans.png
+
+#### 2.1.b
 
 ##### Computational time as a function of `n_clusters` (consider the range of 2 to the `k_max`) with MiniBatchKMeans
+`batch_size` here is 1% of 100K sample, which is 1000. If sample size increases 100 million, computational time is estimated to be about 3.6 seconds.
+Given the previous experiment, we know that as batch_size increases, the computational time will increase towards the time using k-means.
 
+![Computational time as a function of `n_clusters` (consider the range of 2 to the `k_max`) with MiniBatchKMeans][Figure4]
+
+[Figure4]
+
+#### Provide an estimated time required for your implementation to detect at least 100 clusters in a dataset of 1 million samples
+If using k_means, 
+If using MiniBatchKMeans
+If using DBSCAN
 
 ### Part 3. Clustering: 1 million samples problem
 
