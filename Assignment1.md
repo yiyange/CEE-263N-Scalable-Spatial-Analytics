@@ -127,14 +127,14 @@ while n_clusters_ <= 100:
     eps += 0.01
     print (t_fin_db, n_clusters_)
 ```
-eps_100 = 
+eps_100 = 0.001 (0.002 and 0.003 also produces 100 clusters)
 
 
 ### Part 2. Clustering: scalability
 #### 2.1.a
 ##### Computational time as a function of sample size for a fixed k=100 with k_means
 
-![sdkfjalksdf](images/Assignment 1/part21a.kmeans.png)
+![sdkfjalksdf](https://github.com/YiyanGe/CEE-263N-Scalable-Spatial-Analytics/blob/master/images/Assignment%201/part21akmeans.png)
 
 ##### Computational time as a function of sample size for a fixed k=100 with MiniBatchKMeans
 
@@ -142,5 +142,8 @@ eps_100 =
 ##### Computational time as a function of `n_clusters` (consider the range of 2 to the `k_max`) with k_means
 
 ##### Computational time as a function of `n_clusters` (consider the range of 2 to the `k_max`) with MiniBatchKMeans
+
+
+### Part 3. Clustering: 1 million samples problem
 
 
