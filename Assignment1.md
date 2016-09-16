@@ -134,7 +134,8 @@ eps_100 = 0.001 (0.002 and 0.003 also produces 100 clusters)
 #### 2.1.a
 ##### Computational time as a function of sample size for a fixed k=100 with k_means
 
-![sdkfjalksdf](https://github.com/YiyanGe/CEE-263N-Scalable-Spatial-Analytics/blob/master/images/Assignment%201/part21akmeans.png)
+![Computational time as a function of sample size for a fixed k=100 with k_means](https://raw.githubusercontent.com/YiyanGe/CEE-263N-Scalable-Spatial-Analytics/master/images/Assignment%201/part21akmeans.png)
+
 
 ##### Computational time as a function of sample size for a fixed k=100 with MiniBatchKMeans
 
