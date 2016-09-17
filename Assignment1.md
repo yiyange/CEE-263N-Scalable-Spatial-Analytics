@@ -190,9 +190,9 @@ if sample size hits 100 million.
 
 
 #### DBSCAN Scalability and Estimation
-Original data were converted into unit of meter so that eps is easily interpreted. Given eps=0.01m, processing time as a function of sample size are plotted with two types of fitted line.
+Original data were converted into unit of meter so that eps is easily interpreted. Given eps=100m, processing time as a function of sample size are plotted with two types of fitted line.
 Figure below indicates that darker blue fitted line seems to better represent the relationship between processing time and sample size. Given this, processing time to produce at least 100 clusters is estimated to be
-around 19 seconds when sample size is 100 million.
+around 15.45 seconds when sample size is 100 million.
 
 ![Computational time as a function of sample size for a fixed eps=0.01m with DBSCAN][Figure4]
 
