@@ -147,9 +147,9 @@ The following experiments with the relationship between number of clusters and p
 Given the 100K sample, computational time is estimated to be 160 seconds when number of clusters is 100, which is proved to be relatively accruate
 given the previous test (reference time around 141 seconds when number of clusters is 100).
 
-![Computational time as a function of `n_clusters` (consider the range of 2 to the `k_max`) with k_means][Figure3]
+![Computational time as a function of `n_clusters` (consider the range of 2 to the `k_max`) with k_means][Figure1]
 
-[Figure3]:https://raw.githubusercontent.com/YiyanGe/CEE-263N-Scalable-Spatial-Analytics/master/images/Assignment%201/part21bkmeans.png
+[Figure1]:https://raw.githubusercontent.com/YiyanGe/CEE-263N-Scalable-Spatial-Analytics/master/images/Assignment%201/part21bkmeans.png
 
 The first figure in the four images below shows the relationship between processing time and sample size using k_means. Since `n_clusters` is fixed to 100 in this experiment. We don't have to scale up along this dimension.
 We only consider how sample size increases processing time. In order to roughly estimate how long 100 million samples will take to generate 100 clusters, three fitted lines were added shown in the rest three figures.
@@ -157,9 +157,9 @@ We only consider how sample size increases processing time. In order to roughly 
 The first one assumes the simplest linear relation ship with polynomial degree of 1 and the computational time is estimated to be 143 seconds as sample size approaches 100 million. It is underestimated
 because, as shown in previously, 100K samples with 100 clusters require 141 seconds processing time already.
 
-![Computational time as a function of sample size for a fixed k=100 with k_means][Figure1]
+![Computational time as a function of sample size for a fixed k=100 with k_means][Figure2]
 
-[Figure1]:https://raw.githubusercontent.com/YiyanGe/CEE-263N-Scalable-Spatial-Analytics/master/images/Assignment%201/part2KmeansEstimation.png
+[Figure2]:https://raw.githubusercontent.com/YiyanGe/CEE-263N-Scalable-Spatial-Analytics/master/images/Assignment%201/part2KmeansEstimation.png
 
 The bottom left figure uses linear relationship with polynomial degree of 2 and the predicted processing time is 446 seconds, which seems more reasonable. 
 
@@ -169,21 +169,26 @@ The last figure shows how exponential relationship fits with the data. It looks 
 #### MiniBatch KMeans Scalability and Estimation
 
 We also consider how processing time increases as 1) number of clusters increases and 2) sample size increases using MiniBatchKMeans. 
-However, MiniBatchKMeans also has another variable, `batch_size` which can also influence processing time. Figure on the left shows roughly 
+However, MiniBatchKMeans also has another variable, `batch_size` which can also influence processing time. 
+
+The fist figure shows how compuational time increases as `n_clusters` increases by different `batch_size`. It actually reveals similar information we see before: given the same `n_clusters`, higher `batch_size` increases processing time.
+Nonetheless, lower `batch_size` allows larger `k_max` (largest number of clusters produced within 60 seconds).
+
+![Computational time as a function of `n_clusters with MiniBatchKMeans][Figure5]
+
+[Figure5]: https://raw.githubusercontent.com/YiyanGe/CEE-263N-Scalable-Spatial-Analytics/master/images/Assignment%201/part21MinibatchKmeansCluster.png
+
+Figure on the left shows roughly 
 how `batch_size` has an impact on processing time. One noticeable pattern is that the linear relationship between processing time and sample size is
 much less stable as `batch_size` decreases.  
 
-![Computational time as a function of sample size for a fixed k=100 with MiniBatchKMeans][Figure2]
+![Computational time as a function of sample size for a fixed k=100 with MiniBatchKMeans][Figure3]
 
-[Figure2]:https://raw.githubusercontent.com/YiyanGe/CEE-263N-Scalable-Spatial-Analytics/master/images/Assignment%201/part21MinibatchKmeansEstimate.png
+[Figure3]:https://raw.githubusercontent.com/YiyanGe/CEE-263N-Scalable-Spatial-Analytics/master/images/Assignment%201/part21MinibatchKmeansEstimate.png
 
 In order to make estimation, `batch_size` is fixed to be 10000. Given the fitted line in the figure on the right, processing time is estimated to be around 3.62 seconds
 if sample size hits 100 million.
 
-
-
-`batch_size` here is 1% of 100K sample, which is 1000. If sample size increases 100 million, computational time is estimated to be about 3.6 seconds.
-Given the previous experiment, we know that as batch_size increases, the computational time will increase towards the time using k-means.
 
 #### DBSCAN Scalability and Estimation
 Original data were converted into unit of meter so that eps is easily interpreted. Given eps=0.01m, processing time as a function of sample size are plotted with two types of fitted line.
