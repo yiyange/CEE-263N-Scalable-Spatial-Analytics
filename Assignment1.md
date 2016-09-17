@@ -105,11 +105,11 @@ Results follow:
 
 | Percentage | `batch_size` | `k_max`                     |
 |:----------:|:------------:|:---------------------------:|
-|1%          |1000          |3950                         |
+|1%          |1000          |1350                         |
 |5%          |5000          |365                          |
 |10%         |10000         |175                          |
 
-
+One reason for the performance bottleneck caused by `k_max` is that cluster possibilities increase exponentially as number of clusters goes up.
 
 #### Find eps_100 that resultes in 100 clusters with MinPts =100 as well as the corresponding processing time.
 eps_100 = 0.001 (0.002 and 0.003 also produces 100 clusters)
@@ -178,9 +178,8 @@ Nonetheless, lower `batch_size` allows larger `k_max` (largest number of cluster
 
 [Figure5]: https://raw.githubusercontent.com/YiyanGe/CEE-263N-Scalable-Spatial-Analytics/master/images/Assignment%201/part21MinibatchKmeansCluster.png
 
-Figure on the left shows roughly 
-how `batch_size` has an impact on processing time. One noticeable pattern is that the linear relationship between processing time and sample size is
-much less stable as `batch_size` decreases.  
+The follwoing adopts even lower `batch_size` to speed up process. Figure on the left shows roughly how `batch_size` has an impact on processing time. One noticeable pattern is that the linear relationship between processing time and sample size is
+much less stable as `batch_size` decreases. Also, with smaller sample sizes, smaller `batch_size` takes longer processing time.
 
 ![Computational time as a function of sample size for a fixed k=100 with MiniBatchKMeans][Figure3]
 
