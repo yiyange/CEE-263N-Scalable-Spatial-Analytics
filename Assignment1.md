@@ -1,7 +1,7 @@
 
-## Assignment 1
+# Assignment 1
 
-### Part 1. Clustering: the baseline
+## Part 1. Clustering: the baseline
 
 #### Prepare data
 Original data set is 1 million. The following code is used to extract 100K from the total sample. 
@@ -16,7 +16,9 @@ total = len(X)
 X = X[0::int(total/sample)]
 ```
 
+
 #### Reference time of clustering of 100K samples into k=100 clusters using k-means 
+Reference time is 141 seconds.
 
 ```python
 n = 100
@@ -27,7 +29,6 @@ t_fin_km = time.time() - t_km
 print (t_fin_km)
 ```
 
-Reference time is 141 seconds.
 
 #### Reference time of clustering of 100K samples into k=100 clusters with mini-batch k-means.
 To select a propropriate batch_size, the following code is used to roughly look at the relationship between `batch size` 
@@ -57,9 +58,11 @@ Simplified results follow:
 |5%          |5000          |1.65                         |
 |10%         |10000         |3.04                         |
 
+
+
 #### Maximum number of clusters `k_max` that the implementation of k-means can handle
 Via some tests, n = 370 seems to be a reasonable starting number. The following code is implemented to get `k_max`. 
-Processing time threshold is set to approximately 60 seconds.
+Processing time threshold is set to approximately 60 seconds. `k_max` = 36.
 
 ```python
 n = 35
@@ -77,7 +80,7 @@ while t_fin_km <= 60:
     print (t_fin_km)
     n += 1
 ```
-`k_max` = 36 
+
 
 #### Maximum number of clusters k_max that the implementation of minibatch k-means can handle
 Three `batch_size` (1000, 5000, 10000) were run to see how `k_max` changes. `perc` and `n` in the following code can vary as needed.
@@ -106,7 +109,10 @@ Results follow:
 |5%          |5000          |365                          |
 |10%         |10000         |175                          |
 
+
+
 #### Find eps_100 that resultes in 100 clusters with MinPts =100 as well as the corresponding processing time.
+eps_100 = 0.001 (0.002 and 0.003 also produces 100 clusters)
 
 ```python
 eps = 0.05
@@ -127,10 +133,11 @@ while n_clusters_ <= 100:
     eps += 0.01
     print (t_fin_db, n_clusters_)
 ```
-eps_100 = 0.001 (0.002 and 0.003 also produces 100 clusters)
 
 
-### Part 2. Clustering: scalability
+
+
+## Part 2. Clustering: scalability
 #### KMeans Scalability and Estimation
 
 Essentially we are looking at how processing time increases as 1) number of clusters increases and 2) sample size increases.
@@ -174,15 +181,18 @@ In order to make estimation, `batch_size` is fixed to be 10000. Given the fitted
 if sample size hits 100 million.
 
 
-#### 2.1.b
 
-##### Computational time as a function of `n_clusters` (consider the range of 2 to the `k_max`) with MiniBatchKMeans
 `batch_size` here is 1% of 100K sample, which is 1000. If sample size increases 100 million, computational time is estimated to be about 3.6 seconds.
 Given the previous experiment, we know that as batch_size increases, the computational time will increase towards the time using k-means.
 
-![Computational time as a function of `n_clusters` (consider the range of 2 to the `k_max`) with MiniBatchKMeans][Figure4]
+#### DBSCAN Scalability and Estimation
+Original data were converted into unit of meter so that eps is easily interpreted. Given eps=0.01m, processing time as a function of sample size are plotted with two types of fitted line.
+Figure below indicates that darker blue fitted line seems to better represent the relationship between processing time and sample size. Given this, processing time to produce at least 100 clusters is estimated to be
+around 19 seconds when sample size is 100 million.
 
-[Figure4]
+![Computational time as a function of sample size for a fixed eps=0.01m with DBSCAN][Figure4]
+
+[Figure4]: https://raw.githubusercontent.com/YiyanGe/CEE-263N-Scalable-Spatial-Analytics/master/images/Assignment%201/part22DBSCAN.png
 
 
 ### Part 3. Clustering: 1 million samples problem
