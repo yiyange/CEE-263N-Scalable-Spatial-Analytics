@@ -159,29 +159,19 @@ The bottom left figure uses linear relationship with polynomial degree of 2 and 
 The last figure shows how exponential relationship fits with the data. It looks similar on the graph but the estimate time is close to 3018 seconds.
 
 
-
-A table is built to summarize the information:
-
-| Sample Size | `n_clusters` | Computational Time (seconds)|
-|:----------- |:------------ | ---------------------------:|
-|100          |2             |3950                         |
-|             |36 (`k_max`)  |
-|             |100           |
-|100000       |2             |365                          |
-|             |36 (`k_max`)  |
-|             |100           |
-|1000000      |2             |175                          |
-|             |36 (`k_max`)  |175                          |
-|             |100           |                          |
-
-
-
-
 #### MiniBatch KMeans Scalability and Estimation
+
+We also consider how processing time increases as 1) number of clusters increases and 2) sample size increases using MiniBatchKMeans. 
+However, MiniBatchKMeans also has another variable, `batch_size` which can also influence processing time. Figure on the left shows roughly 
+how `batch_size` has an impact on processing time. One noticeable pattern is that the linear relationship between processing time and sample size is
+much less stable as `batch_size` decreases.  
 
 ![Computational time as a function of sample size for a fixed k=100 with MiniBatchKMeans][Figure2]
 
-[Figure2]:https://raw.githubusercontent.com/YiyanGe/CEE-263N-Scalable-Spatial-Analytics/master/images/Assignment%201/part21aminibatchkmeans.png
+[Figure2]:https://raw.githubusercontent.com/YiyanGe/CEE-263N-Scalable-Spatial-Analytics/master/images/Assignment%201/part21MinibatchKmeansEstimate.png
+
+In order to make estimation, `batch_size` is fixed to be 10000. Given the fitted line in the figure on the right, processing time is estimated to be around 3.62 seconds
+if sample size hits 100 million.
 
 #### 2.1.b
 
