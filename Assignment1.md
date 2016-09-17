@@ -133,24 +133,9 @@ eps_100 = 0.001 (0.002 and 0.003 also produces 100 clusters)
 ### Part 2. Clustering: scalability
 #### KMeans Scalability and Estimation
 
-Essentially we are looking at how processing time increases as 1) sample size increases and 2) number of clusters increases.
+Essentially we are looking at how processing time increases as 1) number of clusters increases and 2) sample size increases.
 
-##### Computational time as a function of `n_clusters` (consider the range of 2 to the `k_max`) with k_means
-The figure below shows the relationship between processing time and sample size using k_means. Though a linear regression line is fitted, it is
-very likely that there is an exponential relationship as sample size goes even higher. 
-
-![Computational time as a function of sample size for a fixed k=100 with k_means][Figure1]
-
-[Figure1]:https://raw.githubusercontent.com/YiyanGe/CEE-263N-Scalable-Spatial-Analytics/master/images/Assignment%201/part21akmeans.png
-
-If assuming linear realtionship, we see that the computational time is estimated to be 143 seconds as sample size approaches 100 million. It is underestimated
-because, as shown in previously, 100K samples with 100 clusters require 141 seconds processing time already.
-
-fitting exponential?
-
-
-
-##### Computational time as a function of `n_clusters` (consider the range of 2 to the `k_max`) with k_means
+The following experiments with the relationship between number of clusters and processing time. 
 
 Given the 100K sample, computational time is estimated to be 160 seconds when number of clusters is 100, which is proved to be relatively accruate
 given the previous test (reference time around 141 seconds when number of clusters is 100).
@@ -158,6 +143,22 @@ given the previous test (reference time around 141 seconds when number of cluste
 ![Computational time as a function of `n_clusters` (consider the range of 2 to the `k_max`) with k_means][Figure3]
 
 [Figure3]:https://raw.githubusercontent.com/YiyanGe/CEE-263N-Scalable-Spatial-Analytics/master/images/Assignment%201/part21bkmeans.png
+
+The first figure in the four images below shows the relationship between processing time and sample size using k_means. Since `n_clusters` is fixed to 100 in this experiment. We don't have to scale up along this dimension.
+We only consider how sample size increases processing time. In order to roughly estimate how long 100 million samples will take to generate 100 clusters, three fitted lines were added shown in the rest three figures.
+
+The first one assumes the simplest linear relation ship with polynomial degree of 1 and the computational time is estimated to be 143 seconds as sample size approaches 100 million. It is underestimated
+because, as shown in previously, 100K samples with 100 clusters require 141 seconds processing time already.
+
+![Computational time as a function of sample size for a fixed k=100 with k_means][Figure1]
+
+[Figure1]:https://raw.githubusercontent.com/YiyanGe/CEE-263N-Scalable-Spatial-Analytics/master/images/Assignment%201/part2KmeansEstimation.png
+
+The bottom left figure uses linear relationship with polynomial degree of 2 and the predicted processing time is 446 seconds, which seems more reasonable. 
+
+The last figure shows how exponential relationship fits with the data. It looks similar on the graph but the estimate time is close to 3018 seconds.
+
+
 
 A table is built to summarize the information:
 
@@ -176,7 +177,7 @@ A table is built to summarize the information:
 
 
 
-##### Computational time as a function of sample size for a fixed k=100 with MiniBatchKMeans
+#### MiniBatch KMeans Scalability and Estimation
 
 ![Computational time as a function of sample size for a fixed k=100 with MiniBatchKMeans][Figure2]
 
@@ -192,10 +193,6 @@ Given the previous experiment, we know that as batch_size increases, the computa
 
 [Figure4]
 
-#### Provide an estimated time required for your implementation to detect at least 100 clusters in a dataset of 1 million samples
-If using k_means, 
-If using MiniBatchKMeans
-If using DBSCAN
 
 ### Part 3. Clustering: 1 million samples problem
 
