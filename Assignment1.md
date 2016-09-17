@@ -173,6 +173,7 @@ much less stable as `batch_size` decreases.
 In order to make estimation, `batch_size` is fixed to be 10000. Given the fitted line in the figure on the right, processing time is estimated to be around 3.62 seconds
 if sample size hits 100 million.
 
+
 #### 2.1.b
 
 ##### Computational time as a function of `n_clusters` (consider the range of 2 to the `k_max`) with MiniBatchKMeans
