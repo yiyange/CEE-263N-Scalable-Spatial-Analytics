@@ -1,7 +1,3 @@
-# Assignment 3
-### Yiyan Ge
-The following is the defined GP class implementation. The choice of covariance function follows the example shown in lecture slides.
-```
 class GP_RainFall:
 
     def __init__(self,trn_data,tst_data,h): 
@@ -31,6 +27,8 @@ class GP_RainFall:
         return K
 
     # Make Predictions
+    # predicted mean: m(f)=K(xtest,x)[K+σ^2I−1]^(-1)y
+    # cov(f)=K(xtest,xtest)−K(xtest,x)[K+σ2I]^(−1)K(x,xtest)
 
     def predict(self, sigma, X_trn_raw, X_tst_raw, Y_trn_pre):
         X_tst = self.ConvertUnit(X_tst_raw)
@@ -45,7 +43,7 @@ class GP_RainFall:
         Y_trn = Y_trn_pre - mean*np.ones(Y_trn_pre.shape)
         
         pred_mean = np.dot(np.dot(K_tsttrn,inv(K_trntrn + sigma**2*I)),Y_trn)
-        pred_Y = pred_mean + mean*np.ones(pred_mean.shape) 
+        pred_Y = pred_mean + mean*np.ones(pred_mean.shape) # Re-add the mu to get the accurate value
         
         return pred_Y
     
@@ -64,49 +62,11 @@ class GP_RainFall:
         return self.RMSE
     
     def simulation(self, sigma):
-        m_f = self.predict(sigma, self.X_trn_raw, self.X_tst_raw, self.Y_trn_raw) 
+        m_f = self.predict(sigma, self.X_trn_raw, self.X_tst_raw, self.Y_trn_raw) # Get m(f), K_tsttrn, K_trntrn and I
+
         cov = self.K_tsttst - np.dot(np.dot(self.K_tsttrn,
                             inv(self.K_trntrn + sigma**2*self.I)), self.K_trntst)
         L = np.linalg.cholesky(cov + 0.001*np.eye(cov.shape[0])) #gamma~0.001
         u = np.random.normal(0,1,cov.shape[0])
         f_sim = m_f.reshape(-1,) + np.dot(L,u)
         return f_sim, cov
-```
-
-Using this, I tested relationship between `RMSE` and `sigma` with fixed `h` as well as the relationship between `RMSE` and `h` with fixed `sigma`
-using the following code:
-``` 
-RMSE1 = []
-RMSE2 = []
-
-bandwidth = [x*1000 for x in range(40,90,5)][1:]
-sigma = 0.45
-k = 5
-for h in bandwidth:
-    GP = GP_RainFall(trn_data, tst_data, h)
-    RMSE1.append(GP.predict_cv(5, sigma))
-
-h = 70000
-sigmas = [x for x in frange(0.05, 0.8, 0.05)][1:]
-for sigma in sigmas:
-    GP = GP_RainFall(trn_data, tst_data, h)
-    RMSE2.append(GP.predict_cv(5, sigma))
-```
-
-Figure1 is one example of plotted results. 
-
-![relationship between `RMSE` and `sigma` with fixed `h` & the relationship between `RMSE` and `h` with fixed `sigma`][vis]
-
-[vis]:https://raw.githubusercontent.com/YiyanGe/CEE-263N-Scalable-Spatial-Analytics/master/Assignment%203/Visual.png
-
-With many rounds of experiments with different pair of `sigma` and `h`, I chose `h` = 70000
-`sigma` = 0.4 as the pair that very likely minimizes `RMSE`.
-
-Figure2 is the overlay on Google Earth.
-
-![overlay][vis2]
-
-[vis2]:https://raw.githubusercontent.com/YiyanGe/CEE-263N-Scalable-Spatial-Analytics/master/Assignment%203/GoogleEarthOverlay.png
-
-
-
