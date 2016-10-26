@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+    <Document id="feat_5">
+        <GroundOverlay id="feat_6">
+            <name>GroundOverlay</name>
+            <LookAt>
+                <longitude>-120.3</longitude>
+                <latitude>38.9</latitude>
+                <tilt>70</tilt>
+                <gx:AltitudeMode>relativeToSeaFloor </gx:AltitudeMode>
+                <range>120000</range>
+            </LookAt>
+            <Icon id="link_2">
+                <href>Heatmap.png</href>
+            </Icon>
+            <LatLonBox>
+                <north>39.3</north>
+                <south>38.5</south>
+                <east>-120.8</east>
+                <west>-119.8</west>
+                <rotation>0</rotation>
+            </LatLonBox>
+        </GroundOverlay>
+    </Document>
+</kml>
