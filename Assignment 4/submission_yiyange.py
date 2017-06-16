@@ -6,7 +6,7 @@ from pylab import *
 
 
 ### this will be replaced with the real test image ###
-im_test = plt.imread('parking_test.png')
+im_test = plt.imread('parking_test_preview.png')
 ###
 
 
@@ -22,7 +22,7 @@ def my_feature_vector(loc, im, size = 10):
 
 ## 10 preview test locations
 ### these will be replaced with the real set of 100 test locations ###
-test_locs_labs = np.load('test_locations_and_labels.np')
+test_locs_labs = np.load('test_locations_and_labels_preview.np')
 
 test_locs   = test_locs_labs[:,0:2]
 test_labels = test_locs_labs[:,2]
@@ -50,6 +50,6 @@ for i, xtest in enumerate(X_test):
   if (test_labels[i] == 0.0)&(predicted == 0.0):
      score = score + 0.25
      
-  print test_labels[i], predicted, score 
+  print (test_labels[i], predicted, score)
 
-print 'You final Score is: %.2f' % score
+print ('You final Score is: %.2f' % score)

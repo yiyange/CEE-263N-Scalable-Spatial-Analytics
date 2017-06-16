@@ -66,10 +66,8 @@ class DataSetBuilder(object):
         self.canvas.draw()
 
     def return_points(self):
-        '''Returns the clicked points as [x, y, label] NumPy array'''
         data = np.vstack( (np.vstack(np.floor(self.pt_lst_pos)), np.vstack(np.floor(self.pt_lst_neg))) )
-        labels = np.vstack( (np.vstack(np.floor(self.lab_pos)), np.vstack(np.floor(self.lab_neg))) )
-        
+        labels = np.vstack( (np.vstack(np.floor(self.lab_pos)), np.vstack(np.floor(self.lab_neg))) )    
         return np.hstack( (data, labels))
 
 
@@ -77,43 +75,43 @@ class DataSetBuilder(object):
 def feature_vector(loc, im, size = 10):
   
   # window size
-  w = size
-  # a patch of the size +/- w is extracted as a feature vector
-  patch = im[loc[1]-w:loc[1]+w, loc[0]-w:loc[0]+w]
-  p = np.array(patch).flatten()
-  return p 
+    w = size
+    # a patch of the size +/- w is extracted as a feature vector
+    patch = im[loc[1]-w:loc[1]+w, loc[0]-w:loc[0]+w]
+    p = np.array(patch).flatten()
+    return p 
 
 
 def main():
 
-  ax = gca()
-  im = plt.imread('parking_train.png')
-  ax.imshow(im)
+    ax = gca()
+    im = plt.imread('parking_train.png')
+    ax.imshow(im)
 
-  cc = DataSetBuilder(ax, im)
-  plt.show()
+    cc = DataSetBuilder(ax, im)
+    plt.show()
 
-  X = []
-  Y = []
+    X = []
+    Y = []
   
-  for c in cc.return_points():
+    for c in cc.return_points():
        
-    X.append( feature_vector(c, im) )
-    Y.append(np.array(c[2]))
+        X.append( feature_vector(c, im) )
+        Y.append(np.array(c[2]))
     
     #ax = gca()
     #ax.imshow(im[c[1]-10:c[1]+10, c[0]-10:c[0]+10])
     #plt.show()
 
  
-  with open('X_trn.np','wb') as f:
-    np.save(f, np.array(X))
+    with open('X_final.np','wb') as f:
+        np.save(f, np.array(X))
 
-  with open('Y_trn.np','wb') as f:
-    np.save(f, np.array(Y))  
+    with open('Y_final.np','wb') as f:
+        np.save(f, np.array(Y))  
 
   
-#print ('Saved %d samples.') % len(Y)
+    print ('Saved %d samples.' % len(Y))
   
-if __name__ == "__main__":
-    main()
+    if __name__ == "__main__":
+        main()
