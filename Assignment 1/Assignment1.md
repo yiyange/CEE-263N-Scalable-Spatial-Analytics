@@ -217,3 +217,11 @@ Processing time is around 16.14 seconds.
 ![Step3][Figure8]
 
 [Figure8]:https://raw.githubusercontent.com/YiyanGe/CEE-263N-Scalable-Spatial-Analytics/master/images/Assignment%201/part3_step3.png
+
+### Extra Credit
+
+See last image (Figure 9)
+
+![extracredit][vis]
+
+[vis]:https://raw.githubusercontent.com/YiyanGe/CEE-263N-Scalable-Spatial-Analytics/master/images/visextracredit.jpeg

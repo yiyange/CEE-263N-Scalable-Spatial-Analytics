@@ -1,5 +1,5 @@
 # Assignment 3
-### The approach to predictions, including the choice of the covariance function and its bandwidth, and the noise variance σn2,
+### Yiyan Ge
 The following is the defined GP class implementation. The choice of covariance function follows the example shown in lecture slides.
 ```
 class GP_RainFall:
@@ -31,8 +31,6 @@ class GP_RainFall:
         return K
 
     # Make Predictions
-    # predicted mean: m(f)=K(xtest,x)[K+σ^2I−1]^(-1)y
-    # cov(f)=K(xtest,xtest)−K(xtest,x)[K+σ2I]^(−1)K(x,xtest)
 
     def predict(self, sigma, X_trn_raw, X_tst_raw, Y_trn_pre):
         X_tst = self.ConvertUnit(X_tst_raw)
@@ -47,7 +45,7 @@ class GP_RainFall:
         Y_trn = Y_trn_pre - mean*np.ones(Y_trn_pre.shape)
         
         pred_mean = np.dot(np.dot(K_tsttrn,inv(K_trntrn + sigma**2*I)),Y_trn)
-        pred_Y = pred_mean + mean*np.ones(pred_mean.shape) # Re-add the mu to get the accurate value
+        pred_Y = pred_mean + mean*np.ones(pred_mean.shape) 
         
         return pred_Y
     
@@ -66,8 +64,7 @@ class GP_RainFall:
         return self.RMSE
     
     def simulation(self, sigma):
-        m_f = self.predict(sigma, self.X_trn_raw, self.X_tst_raw, self.Y_trn_raw) # Get m(f), K_tsttrn, K_trntrn and I
-
+        m_f = self.predict(sigma, self.X_trn_raw, self.X_tst_raw, self.Y_trn_raw) 
         cov = self.K_tsttst - np.dot(np.dot(self.K_tsttrn,
                             inv(self.K_trntrn + sigma**2*self.I)), self.K_trntst)
         L = np.linalg.cholesky(cov + 0.001*np.eye(cov.shape[0])) #gamma~0.001
@@ -96,13 +93,20 @@ for sigma in sigmas:
     RMSE2.append(GP.predict_cv(5, sigma))
 ```
 
-Here is one example of plotted results. 
+Figure1 is one example of plotted results. 
 
-![extracredit][vis]
+![relationship between `RMSE` and `sigma` with fixed `h` & the relationship between `RMSE` and `h` with fixed `sigma`][vis]
 
 [vis]:https://raw.githubusercontent.com/YiyanGe/CEE-263N-Scalable-Spatial-Analytics/master/Assignment%203/Visual.png
 
 With many rounds of experiments with different pair of `sigma` and `h`, I chose `h` = 70000
 `sigma` = 0.4 as the pair that very likely minimizes `RMSE`.
+
+Figure2 is the overlay on Google Earth.
+
+![overlay][vis2]
+
+[vis2]:https://raw.githubusercontent.com/YiyanGe/CEE-263N-Scalable-Spatial-Analytics/master/Assignment%203/GoogleEarthOverlay.png
+
 
 
